@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import Http404, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 from .models import Question
@@ -8,9 +8,7 @@ from .models import Question
 
 def index(request):
     latest_question_list = Question.objects.order_by('-pud_date')[:5]
-    context = {
-        'latest_question_list': latest_question_list,
-    }
+    context = {'latest_question_list': latest_question_list}
     return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
@@ -37,4 +35,4 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return (reverse('polls:results', args=(question_id,)))
+        return HttpResponseRedirect(reverse('polls:results', args=(question_id,)))
