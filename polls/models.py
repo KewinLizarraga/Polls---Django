@@ -10,13 +10,13 @@ from django.utils import timezone
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pud_date = models.DateTimeField('date published')
-    
+
     def __str__(self):
         return self.question_text
 
     def was_published_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.pub_date <= now
+        return now - datetime.timedelta(days=1) <= self.pud_date <= now
 
 @python_2_unicode_compatible	# only if you need to support Python2
 class Choice(models.Model):
