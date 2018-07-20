@@ -18,18 +18,18 @@ class IndexView(generic.ListView):
         published in the future).
         """
         return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order.by('-pub_date')[:5]
+            pud_date__lte=timezone.now()
+        ).order_by('-pud_date')[:5]
 
 class DetailView(generic.DetailView):
     model = Question
     templete_name = 'polls/detail.html'
 
-    def get_queryset(sefl):
+    def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
         """
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        return Question.objects.filter(pud_date__lte=timezone.now())
 
 class ResultsView(generic.DetailView):
     model = Question
