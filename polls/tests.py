@@ -15,7 +15,7 @@ class QuestionModelTests(TestCase):
         is in the future.
         """
         time = timezone.now() + datetime.timedelta(days=30)
-        future_question = Question(pub_date=time)
+        future_question = Question(pud_date=time)
         self.assertIs(future_question.was_published_recently(), False)
 
     def test_was_published_recently_with_old_question(self):
@@ -24,7 +24,7 @@ class QuestionModelTests(TestCase):
         is older than 1 day.
         """
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-        old_question = Question(pub_date=time)
+        old_question = Question(pud_date=time)
         self.assertIs(old_question.was_published_recently(), False)
 
     def tes_was_published_recently_with_recent_question(self):
@@ -33,7 +33,7 @@ class QuestionModelTests(TestCase):
        is within the last day.
        """
        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-       recent_question = Question(pub_date=time)
+       recent_question = Question(pud_date=time)
        self.assertIs(recent_question.was_published_recently(), True)
 
 
@@ -44,7 +44,7 @@ def create_question(question_text, days):
     in the past, positive for questions that have yet to be published).
     """
     time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(question_text=question_text, pub_date=time)
+    return Question.objects.create(question_text=question_text, pud_date=time)
 
 class QuestionIndexViewTests(TestCase):
     def test_no_questions(self):
